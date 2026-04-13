@@ -24,7 +24,7 @@ Realizzare una control tower sim-first per la gestione centralizzata di una flot
 
 **Definition of Done**
 
-* Decisioni annotate in un file `architecture-decisions.md`
+* Decisioni annotate in un file `ArchitectureDecisions_v0.md`
 
 **Priorità**
 
