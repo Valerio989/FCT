@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUILD_DIR="$REPO_ROOT/build/px4_sitl_default"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+FCT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+WORKSPACE_ROOT="$(cd "$FCT_ROOT/.." && pwd)"
+PX4_ROOT="$WORKSPACE_ROOT/PX4-Autopilot"
+
+BUILD_DIR="$PX4_ROOT/build/px4_sitl_default"
 PX4_BIN="$BUILD_DIR/bin/px4"
 ROOTFS_DIR="$BUILD_DIR/rootfs"
-LOG_DIR="$REPO_ROOT/logs/two_drones_gz"
+LOG_DIR="$FCT_ROOT/logs/two_drones_gz"
 
 AUTOSTART_ID=4001
 MODEL="gz_x500"
@@ -24,7 +28,7 @@ cleanup() {
 
 if [[ ! -x "$PX4_BIN" ]]; then
   echo "[error] PX4 binary not found: $PX4_BIN"
-  echo "[hint] Build first with: make px4_sitl gz_x500"
+  echo "[hint] Build first with: cd $PX4_ROOT && make px4_sitl gz_x500"
   exit 1
 fi
 
@@ -32,7 +36,7 @@ mkdir -p "$LOG_DIR"
 
 cleanup
 
-cd "$REPO_ROOT"
+cd "$PX4_ROOT"
 
 echo "[start] launching drone 1 (instance 0)..."
 PX4_SYS_AUTOSTART=$AUTOSTART_ID \
