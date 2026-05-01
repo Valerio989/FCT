@@ -10,13 +10,26 @@ PX4_BIN="${PX4_AUTOPILOT_DIR}/build/px4_sitl_default/bin/px4"
 usage() {
   cat <<EOF
 Uso:
-  ./launch_px4_sitl_3_drones.sh
-  ./launch_px4_sitl_3_drones.sh --stop
+  ./scripts/run/launch_px4_sitl_3_drones.sh
+  ./scripts/run/launch_px4_sitl_3_drones.sh --stop
+  ./scripts/run/launch_px4_sitl_3_drones.sh --help
 
-Note:
-- va lanciato da dentro kitty
-- il terminale corrente diventa il drone 1
+Prerequisiti:
+- eseguire il launch da dentro kitty
+- kitty remote control abilitato:
+    allow_remote_control yes
+- PX4-Autopilot deve trovarsi nella cartella padre della repo FCT
+- binario PX4 atteso:
+    ../PX4-Autopilot/build/px4_sitl_default/bin/px4
+
+Comportamento:
+- il terminale corrente diventa drone 1
 - drone 2 e drone 3 vengono aperti come split nella stessa tab
+- i log vengono salvati sotto:
+    logs/px4_sitl_3_drones/<timestamp>/
+
+Stop:
+  ./scripts/run/launch_px4_sitl_3_drones.sh --stop
 EOF
 }
 
@@ -112,7 +125,7 @@ launch_split_drone() {
     bash -lc "${cmd}"
 }
 
-if [[ "${1:-}" == "--help" ]]; then
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
   usage
   exit 0
 fi
